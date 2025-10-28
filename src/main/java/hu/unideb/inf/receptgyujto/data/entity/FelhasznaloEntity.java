@@ -27,4 +27,6 @@ public class FelhasznaloEntity {
     private String felhasznalonev;
     @Column(name = "password")
     private String jelszo;
+    @OneToMany(mappedBy = "felhasznalo", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<ReceptEntity> receptEntities;
 }

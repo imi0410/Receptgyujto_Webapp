@@ -22,4 +22,6 @@ public class ReceptEntity {
     @JoinColumn(name = "user_id")
     @ManyToOne
     private FelhasznaloEntity felhasznalo;
+    @OneToMany(mappedBy = "recept", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<HozzavalokEntity> hozzavalokEntities;
 }

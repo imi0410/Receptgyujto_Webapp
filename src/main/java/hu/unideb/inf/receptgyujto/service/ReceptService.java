@@ -9,5 +9,6 @@ public interface ReceptService {
     ReceptDto findByName(String name);
     List<ReceptDto> findAll();
     void deleteByName(String name);
+    void deleteById(Long id);
     ReceptDto save(ReceptDto receptDto);
 }

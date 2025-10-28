@@ -2,11 +2,10 @@ package hu.unideb.inf.receptgyujto.controller;
 
 import hu.unideb.inf.receptgyujto.service.ReceptService;
 import hu.unideb.inf.receptgyujto.service.dto.ReceptDto;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/recipe")
+@RequestMapping("api/recipes")
 public class ReceptController {
 
     final ReceptService receptService;
@@ -15,11 +14,42 @@ public class ReceptController {
         this.receptService = receptService;
     }
 
+    @GetMapping
     void init(){
         ReceptDto receptDto = new ReceptDto();
         receptDto.setNev("vmi");
         receptDto.setLeiras(".....");
-        receptDto.setFelhasznaloId(null);
+        receptDto.setFelhasznaloId(Long.parseLong("1"));
         receptService.save(receptDto);
+    }
+
+    @GetMapping("/byId")
+    ReceptDto findById(@RequestParam Long id){
+        return receptService.findById(id);
+    }
+
+    @GetMapping("/byName/{name}")
+    ReceptDto findByName(@PathVariable String name){
+        return receptService.findByName(name);
+    }
+
+    @PostMapping("/save")
+    ReceptDto save(@RequestBody ReceptDto receptDto){
+        return receptService.save(receptDto);
+    }
+
+    @DeleteMapping("/deleteByName")
+    void delByName(@RequestParam String name){
+        receptService.deleteByName(name);
+    }
+
+    @DeleteMapping("/deleteById")
+    void delById(@RequestParam Long id){
+        receptService.deleteById(id);
+    }
+
+    @PostMapping("/update")
+    ReceptDto update(@RequestBody ReceptDto receptDto){
+        return receptService.save(receptDto);
     }
 }

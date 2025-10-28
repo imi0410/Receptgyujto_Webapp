@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReceptRepository extends JpaRepository<ReceptEntity,Long> {
+    ReceptEntity getByNev(String nev);
+    void deleteByNev(String nev);
 }
