@@ -14,12 +14,12 @@ public class ReceptController {
         this.receptService = receptService;
     }
 
-    @GetMapping
+    @GetMapping("/init")
     void init(){
         ReceptDto receptDto = new ReceptDto();
-        receptDto.setNev("vmi");
-        receptDto.setLeiras(".....");
-        receptDto.setFelhasznaloId(Long.parseLong("1"));
+        receptDto.setNev("palacsinta");
+        receptDto.setLeiras(".....valami......");
+        receptDto.setFelhasznaloId(null);
         receptService.save(receptDto);
     }
 

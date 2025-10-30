@@ -42,8 +42,7 @@ public class ReceptServiceImpl implements ReceptService {
 
     @Override
     public List<ReceptDto> findAll() {
-        List<ReceptEntity> entities = repo.findAll();
-        return receptMapper.receptEntitiesToDtos(entities);
+        return receptMapper.receptEntitiesToDtos(repo.findAll());
     }
 
     @Override
@@ -69,11 +68,11 @@ public class ReceptServiceImpl implements ReceptService {
             receptDto = mapper.map(receptEntity, ReceptDto.class);
             return receptDto;
         }else{
-             ReceptEntity receptEntity = repo.findById(receptDto.getId()).orElseThrow(()-> new EntityNotFoundException("Entity not found!"));
+             ReceptEntity receptEntity = repo.findById(receptDto.getId()).orElseThrow(()-> new EntityNotFoundException("EntityNotFoundError a receptServiceImpl osztályban(save)"));
              receptEntity.setNev(receptDto.getNev());
              receptEntity.setLeiras(receptDto.getLeiras());
             if (receptDto.getFelhasznaloId() != null) {
-                FelhasznaloEntity felhasznaloEntity = felhasznaloRepository.getById(receptDto.getFelhasznaloId());
+                FelhasznaloEntity felhasznaloEntity = felhasznaloRepository.findById(receptDto.getFelhasznaloId()).orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError a receptServiceImpl osztályban(save)"));
                 receptEntity.setFelhasznalo(felhasznaloEntity);
             }
 
