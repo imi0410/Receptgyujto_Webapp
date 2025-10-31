@@ -33,7 +33,7 @@ public class SecurityConfig {
             throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/h2/**", "/static/css/bejelentkezes.css", "/css/**", "/bejelentkezes").permitAll()
+                .authorizeHttpRequests(req -> req.requestMatchers("/h2/**", "/css/**", "/bejelentkezes", "/regisztracio").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/auth/regisztracio").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/auth/bejelentkezes").permitAll()
                         .anyRequest().authenticated())

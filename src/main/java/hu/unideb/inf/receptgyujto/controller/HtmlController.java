@@ -10,4 +10,9 @@ public class HtmlController {
     public String login() {
         return "bejelentkezes";
     }
+
+    @GetMapping("/regisztracio")
+    public String register(){
+        return "regisztracio";
+    }
 }

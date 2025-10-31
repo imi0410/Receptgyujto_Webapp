@@ -20,8 +20,8 @@ body{
 }
 
 .login h2{
-  margin-bottom: 40px;
-  font-weight: 600;
+  margin-bottom: 60px;
+  font-weight: bold;
   font-size: 40px;
 }
 
@@ -32,8 +32,8 @@ body{
   border-radius: 10px;
   background-color: black;
   color: white;
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: bold;
+  font-size: 1em;
   cursor: pointer;
   transition: background 0.2s ease;
   margin-top: 20px;
@@ -53,18 +53,29 @@ body{
    border-radius: 10px;
    background-color: black;
    color: white;
-   font-weight: 500;
-   font-size: 1rem;
+   font-weight: bold;
+   font-size: 1.1em;
    cursor: pointer;
    transition: background 0.2s ease;
    margin-top: 10px;
 }
 
 input{
-    height: 30px;
+    height: 40px;
     border-radius: 15px;
+    border: 2px solid gray;
+    transition: border-color 0.3s;
+}
+
+button:hover, .registration:hover{
+    background-color: gray;
 }
 
 input::placeholder {
   text-align: center;
+}
+
+input:focus {
+    border-color: black;
+    outline: none;
 }
