@@ -2,6 +2,7 @@ package hu.unideb.inf.receptgyujto.controller;
 
 import hu.unideb.inf.receptgyujto.service.ReceptService;
 import hu.unideb.inf.receptgyujto.service.dto.ReceptDto;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,11 +39,13 @@ public class ReceptController {
         return receptService.save(receptDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(#id)")
     @DeleteMapping("/deleteByName")
     void delByName(@RequestParam String name){
         receptService.deleteByName(name);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(#id)")
     @DeleteMapping("/deleteById")
     void delById(@RequestParam Long id){
         receptService.deleteById(id);

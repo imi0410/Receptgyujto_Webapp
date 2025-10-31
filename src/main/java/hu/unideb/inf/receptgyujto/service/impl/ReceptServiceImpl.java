@@ -68,11 +68,11 @@ public class ReceptServiceImpl implements ReceptService {
             receptDto = mapper.map(receptEntity, ReceptDto.class);
             return receptDto;
         }else{
-             ReceptEntity receptEntity = repo.findById(receptDto.getId()).orElseThrow(()-> new EntityNotFoundException("EntityNotFoundError a receptServiceImpl osztályban(save)"));
+             ReceptEntity receptEntity = repo.findById(receptDto.getId()).orElseThrow(()-> new EntityNotFoundException("EntityNotFoundError"));
              receptEntity.setNev(receptDto.getNev());
              receptEntity.setLeiras(receptDto.getLeiras());
             if (receptDto.getFelhasznaloId() != null) {
-                FelhasznaloEntity felhasznaloEntity = felhasznaloRepository.findById(receptDto.getFelhasznaloId()).orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError a receptServiceImpl osztályban(save)"));
+                FelhasznaloEntity felhasznaloEntity = felhasznaloRepository.findById(receptDto.getFelhasznaloId()).orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError"));
                 receptEntity.setFelhasznalo(felhasznaloEntity);
             }
 

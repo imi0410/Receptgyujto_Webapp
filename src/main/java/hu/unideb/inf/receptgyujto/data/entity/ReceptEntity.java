@@ -23,5 +23,5 @@ public class ReceptEntity {
     @ManyToOne
     private FelhasznaloEntity felhasznalo;
     @OneToMany(mappedBy = "recept", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<HozzavalokEntity> hozzavalokEntities;
+    List<HozzavalokEntity> hozzavalok;
 }
