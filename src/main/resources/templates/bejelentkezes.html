@@ -8,15 +8,16 @@
 </head>
 <body>
 <div class="login">
-    <form th:action="@{/bejelentkezes}" method="post" class="login-form">
+    <form id="login-form" method="post" class="login-form">
     <h2>Jelentkezz be</h2>
-    <input type="text" name="username" placeholder="Felhasználónév" required>
-    <input type="password" name="password" placeholder="Jelszó" required>
+    <input type="text" name="felhasznalonev" placeholder="Felhasználónév" required>
+    <input type="password" name="jelszo" placeholder="Jelszó" required>
     <button type="submit">Belépés</button>
 </form>
     <p class="registration">
-        <a th:href="@{/regisztracio}">Regisztráció</a>
+        <a th:href="@{/html/regisztracio}">Regisztráció</a>
     </p>
+    <script th:src="@{/javascript/bejelentkezes.js}"></script>
 </div>
     
 </body>
