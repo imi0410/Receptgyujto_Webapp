@@ -33,12 +33,12 @@ public class SecurityConfig {
             throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req -> req.requestMatchers("/h2/**", "/css/**", "/html/**", "/javascript/**" ).permitAll()
+                .authorizeHttpRequests(req -> req.requestMatchers("/h2/**", "/css/**", "/html/bejelentkezes", "/html/regisztracio", "/javascript/**" ).permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/auth/regisztracio").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/auth/bejelentkezes").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(man -> man
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authenticationProvider(authenticationProvider())
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));;
 
