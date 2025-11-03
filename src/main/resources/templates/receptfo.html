@@ -1,11 +1,56 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Receptgyűjtő</title>
+    <title>Receptgyujto</title>
+<!--    <link rel="stylesheet" th:href="@{/css/receptfo.css}">-->
 </head>
 <body>
 
+<h1>Receptgyűjtő</h1>
+
+<nav>
+    <button onclick="showSection('add-recipe')">Recept hozzáadása</button>
+    <button onclick="showSection('my-recipes')">Saját receptjeim</button>
+    <button onclick="showSection('all-recipes')">Összes recept</button>
+    <button onclick="logout()">Kilépés</button>
+</nav>
+
+<hr>
+
+<section id="add-recipe" style="display: none;">
+    <h3 id="add-edit-title">Új recept hozzáadása</h3>
+    <form id="add-recipe-form">
+        <input type="hidden" id="recipe-id-to-edit" value="">
+
+        <input type="text" id="title" placeholder="Recept neve" required>
+        <textarea id="description" placeholder="Leírás / Elkészítés" required></textarea>
+
+        <h4>Hozzávalók</h4>
+        <div id="ingredients-container">
+            <div class="ingredient-row">
+                <input type="text" class="ingredient-name" placeholder="Hozzávaló neve" required>
+                <input type="number" class="ingredient-quantity" placeholder="Mennyiség" required>
+                <input type="text" class="ingredient-unit" placeholder="Egység (pl. g, db)">
+            </div>
+        </div>
+
+        <button type="button" onclick="addIngredientRow()">Új hozzávaló</button>
+        <button type="submit" id="save-button" class="save-button">Recept mentése</button>
+<!--        <button type="button" id="update-recipe-btn" onclick="submitUpdate()" style="display: none;">Recept frissítése</button>-->
+    </form>
+</section>
+
+<section id="my-recipes" style="display: block;">
+    <h2>Saját receptjeid</h2>
+    <div id="my-recipe-list" class="recipe-list"></div>
+</section>
+
+<section id="all-recipes" style="display: none;">
+    <h2>Összes recept</h2>
+    <div id="all-recipe-list" class="recipe-list"></div>
+</section>
+
+<script th:src="@{/javascript/receptfo.js}"></script>
 </body>
 </html>
