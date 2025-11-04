@@ -11,4 +11,5 @@ public interface ReceptService {
     void deleteByName(String name);
     void deleteById(Long id);
     ReceptDto save(ReceptDto receptDto);
+    List<ReceptDto> findByUserId(Long id);
 }

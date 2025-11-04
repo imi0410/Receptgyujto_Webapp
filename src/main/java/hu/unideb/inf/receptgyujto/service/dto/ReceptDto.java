@@ -2,6 +2,8 @@ package hu.unideb.inf.receptgyujto.service.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -14,4 +16,5 @@ public class ReceptDto {
     private String nev;
     private String leiras;
     private Long felhasznaloId;
+    private List<HozzavalokDto> hozzavalok;
 }

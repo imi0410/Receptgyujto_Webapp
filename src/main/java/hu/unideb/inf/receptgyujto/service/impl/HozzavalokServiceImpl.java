@@ -74,10 +74,10 @@ public class HozzavalokServiceImpl implements HozzavalokService {
         if(hozzavalokDto.getId() == null){
             HozzavalokEntity hozzavalokEntity = mapper.map(hozzavalokDto,HozzavalokEntity.class);
 
-            if (hozzavalokDto.getReceptId() != null) {
-                ReceptEntity receptEntity = receptRepository.findById(hozzavalokDto.getReceptId())
-                        .orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError"));
-                hozzavalokEntity.setRecept(receptEntity);}
+//            if (hozzavalokDto.getReceptId() != null) {
+//                ReceptEntity receptEntity = receptRepository.findById(hozzavalokDto.getReceptId())
+//                        .orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError"));
+//                hozzavalokEntity.setRecept(receptEntity);}
 
             hozzavalokEntity = repo.save(hozzavalokEntity);
             hozzavalokDto = mapper.map(hozzavalokEntity,HozzavalokDto.class);
@@ -87,10 +87,7 @@ public class HozzavalokServiceImpl implements HozzavalokService {
             hozzavalokEntity.setNev(hozzavalokDto.getNev());
             hozzavalokEntity.setMennyiseg(hozzavalokDto.getMennyiseg());
             hozzavalokEntity.setMertekegyseg(hozzavalokDto.getMertekegyseg());
-            if(hozzavalokDto.getReceptId() != null){
-                ReceptEntity receptEntity = receptRepository.findById(hozzavalokDto.getReceptId()).orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError"));
-                hozzavalokEntity.setRecept(receptEntity);
-            }
+            hozzavalokEntity.setRecept(new ReceptEntity());
             hozzavalokEntity = repo.save(hozzavalokEntity);
             return hozzavalokMapper.hozzavalokEntitytoDto(hozzavalokEntity);
         }

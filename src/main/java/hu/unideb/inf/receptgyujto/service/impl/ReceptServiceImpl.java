@@ -1,11 +1,13 @@
 package hu.unideb.inf.receptgyujto.service.impl;
 
 import hu.unideb.inf.receptgyujto.data.entity.FelhasznaloEntity;
+import hu.unideb.inf.receptgyujto.data.entity.HozzavalokEntity;
 import hu.unideb.inf.receptgyujto.data.entity.ReceptEntity;
 import hu.unideb.inf.receptgyujto.data.repository.FelhasznaloRepository;
 import hu.unideb.inf.receptgyujto.data.repository.ReceptRepository;
 import hu.unideb.inf.receptgyujto.service.ReceptService;
 import hu.unideb.inf.receptgyujto.service.dto.ReceptDto;
+import hu.unideb.inf.receptgyujto.service.mapper.HozzavalokMapper;
 import hu.unideb.inf.receptgyujto.service.mapper.ReceptMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -20,13 +22,15 @@ public class ReceptServiceImpl implements ReceptService {
     final ReceptRepository repo;
     final ModelMapper mapper;
     final ReceptMapper receptMapper;
-    private final FelhasznaloRepository felhasznaloRepository;
+    final HozzavalokMapper hozzavalokMapper;
+    final FelhasznaloRepository felhasznaloRepository;
 
-    public ReceptServiceImpl(ReceptRepository repo, ModelMapper mapper, ReceptMapper receptMapper,
+    public ReceptServiceImpl(ReceptRepository repo, ModelMapper mapper, ReceptMapper receptMapper, HozzavalokMapper hozzavalokMapper,
                              FelhasznaloRepository felhasznaloRepository) {
         this.repo = repo;
         this.mapper = mapper;
         this.receptMapper = receptMapper;
+        this.hozzavalokMapper = hozzavalokMapper;
         this.felhasznaloRepository = felhasznaloRepository;
     }
 
@@ -60,10 +64,21 @@ public class ReceptServiceImpl implements ReceptService {
     }
 
     @Override
+    public List<ReceptDto> findByUserId(Long id) {
+        return receptMapper.receptEntitiesToDtos(repo.findByFelhasznaloId(id));
+    }
+
+    @Override
     @Transactional
     public ReceptDto save(ReceptDto receptDto) {
         if(receptDto.getId() == null) {
             ReceptEntity receptEntity = mapper.map(receptDto, ReceptEntity.class);
+            if (receptEntity.getHozzavalok() != null) {
+                ReceptEntity finalReceptEntity = receptEntity;
+                receptEntity.getHozzavalok().forEach(hozzavalok -> {
+                    hozzavalok.setRecept(finalReceptEntity);
+                });
+            }
             receptEntity = repo.save(receptEntity);
             receptDto = mapper.map(receptEntity, ReceptDto.class);
             return receptDto;
@@ -74,6 +89,13 @@ public class ReceptServiceImpl implements ReceptService {
             if (receptDto.getFelhasznaloId() != null) {
                 FelhasznaloEntity felhasznaloEntity = felhasznaloRepository.findById(receptDto.getFelhasznaloId()).orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError"));
                 receptEntity.setFelhasznalo(felhasznaloEntity);
+            }
+            if (receptDto.getHozzavalok() != null) {
+                receptEntity.getHozzavalok().clear();
+                List<HozzavalokEntity> ujHozzavalok = hozzavalokMapper.hozzavalokDtosToEntities(receptDto.getHozzavalok());
+                ReceptEntity finalReceptEntity = receptEntity;
+                ujHozzavalok.forEach(h -> h.setRecept(finalReceptEntity));
+                receptEntity.getHozzavalok().addAll(ujHozzavalok);
             }
 
              receptEntity = repo.save(receptEntity);

@@ -12,5 +12,5 @@ public interface HozzavalokMapper {
     List<HozzavalokDto> hozzavalokEntitiesToDtos(List<HozzavalokEntity> l);
 
     HozzavalokEntity hozzavalokDtoToEntity(HozzavalokDto d);
-    List<HozzavalokEntity> hozzavalokDtoToEntities(List<HozzavalokDto> l);
+    List<HozzavalokEntity> hozzavalokDtosToEntities(List<HozzavalokDto> l);
 }

@@ -53,9 +53,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void bejelentkezes(BejelentkezesDto dto) {
+    public Long bejelentkezes(BejelentkezesDto dto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(dto.getFelhasznalonev(), dto.getJelszo()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        FelhasznaloEntity bejelentkezett = felhRepo.findByFelhasznalonev(dto.getFelhasznalonev());
+        if (bejelentkezett != null) {
+            return bejelentkezett.getId();
+        }
+        return null;
     }
 }

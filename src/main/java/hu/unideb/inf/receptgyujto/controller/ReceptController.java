@@ -5,6 +5,8 @@ import hu.unideb.inf.receptgyujto.service.dto.ReceptDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/recipes")
 public class ReceptController {
@@ -15,13 +17,9 @@ public class ReceptController {
         this.receptService = receptService;
     }
 
-    @GetMapping("/init")
-    void init(){
-        ReceptDto receptDto = new ReceptDto();
-        receptDto.setNev("palacsinta");
-        receptDto.setLeiras(".....valami......");
-        receptDto.setFelhasznaloId(null);
-        receptService.save(receptDto);
+    @GetMapping
+    public List<ReceptDto> findAll() {
+        return receptService.findAll();
     }
 
     @GetMapping("/byId")
@@ -34,18 +32,23 @@ public class ReceptController {
         return receptService.findByName(name);
     }
 
+    @GetMapping("/user/{userId}")
+    List<ReceptDto> getRecipesByUser(@PathVariable Long userId) {
+        return receptService.findByUserId(userId);
+    }
+
     @PostMapping("/save")
     ReceptDto save(@RequestBody ReceptDto receptDto){
         return receptService.save(receptDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(#id)")
+    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(id)")
     @DeleteMapping("/deleteByName")
     void delByName(@RequestParam String name){
         receptService.deleteByName(name);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(#id)")
+//    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(#id)")
     @DeleteMapping("/deleteById")
     void delById(@RequestParam Long id){
         receptService.deleteById(id);
