@@ -12,8 +12,9 @@ const userId = sessionStorage.getItem("userId");
 
 
 //felhasznalo -----------------------------------
+
 if (!userId) {
-    alert("Nincs bejelentkezett felhasználó! Kérlek jelentkezz be.");
+    alert("Jelentkezz be!");
     window.location.href = "/html/bejelentkezes";
 }
 
@@ -32,7 +33,6 @@ function showSection(sectionId) {
 
     document.getElementById(sectionId).style.display = 'block';
 
-    // Alaphelyzetbe állítás, ha a "Recept hozzáadása" szekcióba lépünk vissza
     if (sectionId === 'add-recipe') {
         saveBtn.style.display = 'inline-block';
         addForm.reset();
@@ -57,7 +57,7 @@ function addIngredientRow() {
         <input type="text" class="ingredient-name" placeholder="Hozzávaló neve" required>
         <input type="number" class="ingredient-quantity" placeholder="Mennyiség" required>
         <input type="text" class="ingredient-unit" placeholder="Egység (pl. g, db)">
-        <button type="button" onclick="this.parentNode.remove()">➖</button>
+        <button type="button" onclick="this.parentNode.remove()">Törlés</button>
     `;
     ingredientsContainer.appendChild(newRow);
 }
@@ -87,12 +87,12 @@ function createRecipeElement(r, isOwner) {
 
     if (isOwner) {
         const editBtn = document.createElement("button");
-        editBtn.textContent = "✏️ Szerkesztés";
+        editBtn.textContent = "Szerkesztés";
         editBtn.onclick = () => editRecipe(r.id);
         div.appendChild(editBtn);
 
         const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "🗑️ Törlés";
+        deleteBtn.textContent = "Törlés";
         deleteBtn.onclick = () => deleteRecipe(r.id);
         div.appendChild(deleteBtn);
     }
@@ -100,9 +100,7 @@ function createRecipeElement(r, isOwner) {
     return div;
 }
 
-// ----------------------------------------------------------------
-// RECEPT BETÖLTÉSE
-// ----------------------------------------------------------------
+// recept betoltes -------------------------------
 
 async function loadMyRecipes() {
     try {
@@ -145,9 +143,7 @@ async function loadAllRecipes() {
     }
 }
 
-// ----------------------------------------------------------------
-// ADAT KINYERÉS AZ ŰRLAPRÓL
-// ----------------------------------------------------------------
+// adatok ----------------------------------------------------
 
 function getRecipeDataFromForm() {
     const title = titleInput.value.trim();
@@ -164,7 +160,6 @@ function getRecipeDataFromForm() {
         const quantity = quantityInput ? parseFloat(quantityInput.value) : NaN;
         const unit = unitInput ? unitInput.value.trim() : '';
 
-        // Csak érvényes, pozitív mennyiségű hozzávalót adunk hozzá
         if (name && !isNaN(quantity) && quantity > 0) {
             ingredients.push({
                 nev: name,
@@ -193,10 +188,7 @@ function getRecipeDataFromForm() {
     return recipeData;
 }
 
-
-// ----------------------------------------------------------------
-// RECEPT HOZZÁADÁS (SAVE)
-// ----------------------------------------------------------------
+// recept hozzaadas -------------------------------------------------
 
 addForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -229,9 +221,7 @@ addForm.addEventListener("submit", async (e) => {
 });
 
 
-// ----------------------------------------------------------------
-// RECEPT TÖRLÉS
-// ----------------------------------------------------------------
+// recept törlés -----------------------------
 
 async function deleteRecipe(id) {
     if (!confirm("Biztosan törölni szeretnéd ezt a receptet?")) return;
@@ -242,7 +232,7 @@ async function deleteRecipe(id) {
         });
 
         if (res.ok) {
-            alert("Recept sikeresen törölve!");
+            alert("Recept törölve!");
             loadMyRecipes();
             loadAllRecipes();
         } else {
@@ -254,12 +244,9 @@ async function deleteRecipe(id) {
 }
 
 
-// ----------------------------------------------------------------
-// RECEPT SZERKESZTÉS (EDIT - LOAD)
-// ----------------------------------------------------------------
+// recept edit -------------------------------------------------------
 
 async function editRecipe(id) {
-    // 1. Lekérjük a teljes receptet
     let originalRecipe;
     try {
         const fetchRes = await fetch(`${API}/byId?id=${id}`);
@@ -271,16 +258,12 @@ async function editRecipe(id) {
     }
 
     showSection('add-recipe');
-
-    // 2. Feltöltjük az űrlapot a recept adataival
     titleInput.value = originalRecipe.nev;
     descriptionInput.value = originalRecipe.leiras;
-    recipeIdToEdit.value = id; // Eltároljuk az ID-t a frissítéshez
+    recipeIdToEdit.value = id;
 
-    // Töröljük a hozzávaló sorokat
     ingredientsContainer.innerHTML = '';
 
-    // Hozzáadjuk a recept hozzávalóit
     originalRecipe.hozzavalok.forEach(ing => {
         const newRow = document.createElement("div");
         newRow.className = "ingredient-row";
@@ -288,12 +271,10 @@ async function editRecipe(id) {
             <input type="text" class="ingredient-name" placeholder="Hozzávaló neve" required value="${ing.nev || ''}">
             <input type="number" class="ingredient-quantity" placeholder="Mennyiség" required value="${ing.mennyiseg || ''}">
             <input type="text" class="ingredient-unit" placeholder="Egység (pl. g, db)" value="${ing.mertekegyseg || ''}">
-            <button type="button" onclick="this.parentNode.remove()">➖</button>
+            <button type="button" onclick="this.parentNode.remove()">Törlés</button>
         `;
         ingredientsContainer.appendChild(newRow);
     });
-
-    // Ha nincsenek hozzávalók, adjunk egy üres sort
     if (!originalRecipe.hozzavalok || originalRecipe.hozzavalok.length === 0) {
         addIngredientRow();
     }
