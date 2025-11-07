@@ -42,13 +42,12 @@ public class ReceptController {
         return receptService.save(receptDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(id)")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteByName")
     void delByName(@RequestParam String name){
         receptService.deleteByName(name);
     }
 
-//    @PreAuthorize("hasRole('ADMIN') or @securityService.isReceptOwner(#id)")
     @DeleteMapping("/deleteById")
     void delById(@RequestParam Long id){
         receptService.deleteById(id);

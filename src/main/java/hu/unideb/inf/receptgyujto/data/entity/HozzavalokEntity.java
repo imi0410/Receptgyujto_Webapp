@@ -20,6 +20,6 @@ public class HozzavalokEntity {
     @Column(name = "unit")
     private String mertekegyseg;
     @JoinColumn(name = "recipe_id")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private ReceptEntity recept;
 }

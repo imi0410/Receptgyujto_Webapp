@@ -27,7 +27,7 @@ public class FelhasznaloInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         FelhasznaloEntity admin = new FelhasznaloEntity();
         JogosultsagEntity adminJog = new JogosultsagEntity();
-        adminJog.setNev("ADMIN");
+        adminJog.setNev("ROLE_ADMIN");
         jogosultsagRepository.save(adminJog);
         admin.setNev("vmi");
         admin.setSzuletesiDatum(new Date("2000/01/01"));

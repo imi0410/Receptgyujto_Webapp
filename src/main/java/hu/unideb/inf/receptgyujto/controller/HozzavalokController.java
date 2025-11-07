@@ -3,7 +3,10 @@ package hu.unideb.inf.receptgyujto.controller;
 import hu.unideb.inf.receptgyujto.service.HozzavalokService;
 import hu.unideb.inf.receptgyujto.service.dto.HozzavalokDto;
 import hu.unideb.inf.receptgyujto.service.dto.ReceptDto;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/ingredients")
@@ -31,16 +34,21 @@ public class HozzavalokController {
         return hozzavalokService.findReceptByHozzavalokId(hozzavalokId);
     }
 
+    @GetMapping
+    List<HozzavalokDto> findAll(){return hozzavalokService.findAll();}
+
     @PostMapping("/save")
     HozzavalokDto save(@RequestBody HozzavalokDto hozzavalokDto){
         return hozzavalokService.save(hozzavalokDto);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteById")
     void delById(@RequestParam Long id){
         hozzavalokService.deleteById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteByName")
     void delByName(@RequestParam String name){
         hozzavalokService.deleteByName(name);

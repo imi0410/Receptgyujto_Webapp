@@ -228,7 +228,8 @@ async function deleteRecipe(id) {
 
     try {
         const res = await fetch(`${API}/deleteById?id=${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include"
         });
 
         if (res.ok) {
