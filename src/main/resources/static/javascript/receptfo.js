@@ -24,6 +24,18 @@ function logout() {
     window.location.href = "/html/bejelentkezes";
 }
 
+async function toAdmin(){
+try{
+    const response = await fetch("/html/adminpage");
+    if(response.ok){
+        window.location.href = "/html/adminpage";
+    }else{
+        alert("Csak adminok léphetnek be ide!");
+    }}catch(err){
+        alert("Hiba")
+    }
+}
+
 // navigacio -----------------------------------------
 
 function showSection(sectionId) {
@@ -49,6 +61,8 @@ function showSection(sectionId) {
         loadAllRecipes();
     }
 }
+
+
 
 function addIngredientRow() {
     const newRow = document.createElement("div");

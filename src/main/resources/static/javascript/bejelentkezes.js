@@ -20,10 +20,8 @@ document.getElementById('login-form').addEventListener('submit', async function 
             sessionStorage.setItem('userId', user.id);
             alert('Sikeres bejelentkezés!');
             window.location.href = '/html/receptfo';
-        } else if (response.status === 401) {
-            alert('Hibás felhasználónév vagy jelszó!');
         } else {
-            alert('Hiba: ' + response.status);
+            alert('Hibás felhasználónév vagy jelszó!');
         }
 
     } catch (error) {

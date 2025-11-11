@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminPage</title>
+    <link rel="stylesheet">
+</head>
+<body>
+
+<h1>AdminPage</h1>
+
+<table id="recept-table">
+    <thead>
+    <tr>
+        <th>Recept ID</th>
+        <th>Recept Neve</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody id="recept-table-body">
+    <tr>
+    </tr>
+    </tbody>
+</table>
+
+<p><a th:href="@{/html/receptfo}">Vissza a Főoldalra</a></p>
+
+<script th:src="@{/javascript/adminpage.js}"></script>
+</body>
+</html>

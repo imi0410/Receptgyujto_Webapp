@@ -22,4 +22,9 @@ public class HtmlController {
     public String toReceptfoPage(){
         return "receptfo";
     }
+
+    @GetMapping("/adminpage")
+    public String toAdminPage(){
+        return "adminpage";
+    }
 }

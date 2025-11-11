@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Receptgyujto</title>
-    <link rel="stylesheet" href="css/receptfo.css">
+    <link rel="stylesheet" th:href="@{/css/receptfo.css}">
 </head>
 <body>
 
@@ -13,6 +13,7 @@
     <button onclick="showSection('add-recipe')">Recept hozzáadása</button>
     <button onclick="showSection('my-recipes')">Saját receptjeim</button>
     <button onclick="showSection('all-recipes')">Összes recept</button>
+    <button onclick="toAdmin()">Admin felület</button>
     <button onclick="logout()">Kilépés</button>
 </nav>
 
@@ -50,6 +51,6 @@
     <div id="all-recipe-list" class="recipe-list"></div>
 </section>
 
-<script src="javascript/receptfo.js"></script>
+<script th:src="@{/javascript/receptfo.js}"></script>
 </body>
 </html>

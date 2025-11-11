@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req -> req.requestMatchers("/h2/**", "/css/**", "/html/bejelentkezes", "/html/regisztracio", "/javascript/**" ).permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/auth/regisztracio").permitAll()
                         .requestMatchers(org.springframework.http.HttpMethod.POST, "/auth/bejelentkezes").permitAll()
+                        .requestMatchers("/html/adminpage").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(man -> man
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))

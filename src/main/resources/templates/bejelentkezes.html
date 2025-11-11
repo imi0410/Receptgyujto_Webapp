@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="hu">
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bejelentkezes.css">
+    <link rel="stylesheet" th:href="@{/css/bejelentkezes.css}">
     <title>Bejelentkezés</title>
 </head>
 <body>
@@ -15,9 +15,9 @@
     <button type="submit">Belépés</button>
 </form>
     <p class="registration">
-        <a href="regisztracio.html">Regisztráció</a>
+        <a th:href="@{/html/regisztracio}">Regisztráció</a>
     </p>
-    <script src="javascript/bejelentkezes.js"></script>
+    <script th:src="@{/javascript/bejelentkezes.js}"></script>
 </div>
     
 </body>
