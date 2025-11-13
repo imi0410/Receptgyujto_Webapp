@@ -29,7 +29,7 @@ public class FelhasznaloEntity implements UserDetails {
     private String nem;
     @Column(name = "username", unique = true, nullable = false)
     private String felhasznalonev;
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String jelszo;
     @OneToMany(mappedBy = "felhasznalo", cascade = CascadeType.ALL, orphanRemoval = true)
     List<ReceptEntity> receptek;

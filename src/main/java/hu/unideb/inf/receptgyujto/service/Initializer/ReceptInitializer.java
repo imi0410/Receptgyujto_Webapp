@@ -1,4 +1,4 @@
-package hu.unideb.inf.receptgyujto.service;
+package hu.unideb.inf.receptgyujto.service.Initializer;
 
 import hu.unideb.inf.receptgyujto.data.entity.HozzavalokEntity;
 import hu.unideb.inf.receptgyujto.data.entity.ReceptEntity;

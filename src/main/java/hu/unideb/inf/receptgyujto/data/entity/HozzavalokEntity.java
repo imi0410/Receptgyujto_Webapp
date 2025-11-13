@@ -13,11 +13,11 @@ public class HozzavalokEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String nev;
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private Double mennyiseg;
-    @Column(name = "unit")
+    @Column(name = "unit", nullable = false)
     private String mertekegyseg;
     @JoinColumn(name = "recipe_id")
     @ManyToOne(fetch = FetchType.EAGER)

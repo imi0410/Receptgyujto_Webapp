@@ -42,7 +42,6 @@ public class ReceptController {
         return receptService.save(receptDto);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteByName")
     void delByName(@RequestParam String name){
         receptService.deleteByName(name);

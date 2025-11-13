@@ -19,7 +19,7 @@ document.getElementById('login-form').addEventListener('submit', async function 
             const user = await response.json();
             sessionStorage.setItem('userId', user.id);
             alert('Sikeres bejelentkezés!');
-            window.location.href = '/html/receptfo';
+            window.location.href = 'receptfo.html';
         } else {
             alert('Hibás felhasználónév vagy jelszó!');
         }

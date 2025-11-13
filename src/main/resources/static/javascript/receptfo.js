@@ -15,20 +15,20 @@ const userId = sessionStorage.getItem("userId");
 
 if (!userId) {
     alert("Jelentkezz be!");
-    window.location.href = "/html/bejelentkezes";
+    window.location.href = "bejelentkezes.html";
 }
 
 function logout() {
     sessionStorage.removeItem("userId");
     alert("Sikeresen kijelentkeztél.");
-    window.location.href = "/html/bejelentkezes";
+    window.location.href = "bejelentkezes.html";
 }
 
 async function toAdmin(){
 try{
-    const response = await fetch("/html/adminpage");
+    const response = await fetch("adminpage.html");
     if(response.ok){
-        window.location.href = "/html/adminpage";
+        window.location.href = "adminpage.html";
     }else{
         alert("Csak adminok léphetnek be ide!");
     }}catch(err){

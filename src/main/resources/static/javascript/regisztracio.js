@@ -15,7 +15,7 @@ document.getElementById('regisztracio-form').addEventListener('submit', function
     .then(response => {
       if (!response.ok) throw new Error(`Hiba: ${response.status}`);
       alert('Sikeres regisztráció!');
-      window.location.href = '/html/bejelentkezes';
+      window.location.href = 'bejelentkezes.html';
     })
     .catch(error => {
       alert('Hiba történt: ' + error.message);
