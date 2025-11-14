@@ -51,7 +51,7 @@ function showSection(sectionId) {
         ingredientsContainer.innerHTML = `
             <div class="ingredient-row">
                 <input type="text" class="ingredient-name" placeholder="Hozzávaló neve" required>
-                <input type="number" class="ingredient-quantity" placeholder="Mennyiség" required>
+                <input type="number" class="ingredient-quantity" placeholder="Mennyiség" step="0.01" required>
                 <input type="text" class="ingredient-unit" placeholder="Egység (pl. g, db)">
             </div>
         `;
@@ -69,7 +69,7 @@ function addIngredientRow() {
     newRow.className = "ingredient-row";
     newRow.innerHTML = `
         <input type="text" class="ingredient-name" placeholder="Hozzávaló neve" required>
-        <input type="number" class="ingredient-quantity" placeholder="Mennyiség" required>
+        <input type="number" class="ingredient-quantity" placeholder="Mennyiség" step="0.01" required>
         <input type="text" class="ingredient-unit" placeholder="Egység (pl. g, db)">
         <button type="button" onclick="this.parentNode.remove()">Törlés</button>
     `;
@@ -284,7 +284,7 @@ async function editRecipe(id) {
         newRow.className = "ingredient-row";
         newRow.innerHTML = `
             <input type="text" class="ingredient-name" placeholder="Hozzávaló neve" required value="${ing.nev || ''}">
-            <input type="number" class="ingredient-quantity" placeholder="Mennyiség" required value="${ing.mennyiseg || ''}">
+            <input type="number" class="ingredient-quantity" placeholder="Mennyiség" step="0.01" required value="${ing.mennyiseg || ''}">
             <input type="text" class="ingredient-unit" placeholder="Egység (pl. g, db)" value="${ing.mertekegyseg || ''}">
             <button type="button" onclick="this.parentNode.remove()">Törlés</button>
         `;

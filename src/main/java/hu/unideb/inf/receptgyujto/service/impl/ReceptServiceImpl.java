@@ -11,7 +11,6 @@ import hu.unideb.inf.receptgyujto.service.mapper.HozzavalokMapper;
 import hu.unideb.inf.receptgyujto.service.mapper.ReceptMapper;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +19,13 @@ import java.util.List;
 @Service
 public class ReceptServiceImpl implements ReceptService {
     final ReceptRepository repo;
-    final ModelMapper mapper;
     final ReceptMapper receptMapper;
     final HozzavalokMapper hozzavalokMapper;
     final FelhasznaloRepository felhasznaloRepository;
 
-    public ReceptServiceImpl(ReceptRepository repo, ModelMapper mapper, ReceptMapper receptMapper, HozzavalokMapper hozzavalokMapper,
+    public ReceptServiceImpl(ReceptRepository repo, ReceptMapper receptMapper, HozzavalokMapper hozzavalokMapper,
                              FelhasznaloRepository felhasznaloRepository) {
         this.repo = repo;
-        this.mapper = mapper;
         this.receptMapper = receptMapper;
         this.hozzavalokMapper = hozzavalokMapper;
         this.felhasznaloRepository = felhasznaloRepository;
@@ -36,12 +33,12 @@ public class ReceptServiceImpl implements ReceptService {
 
     @Override
     public ReceptDto findById(Long id) {
-       return mapper.map(repo.getReferenceById(id),ReceptDto.class);
+       return receptMapper.receptEntityToDto(repo.getReferenceById(id));
     }
 
     @Override
     public ReceptDto findByName(String name) {
-        return mapper.map(repo.getByNev(name),ReceptDto.class);
+        return receptMapper.receptEntityToDto(repo.getByNev(name));
     }
 
     @Override
@@ -59,6 +56,7 @@ public class ReceptServiceImpl implements ReceptService {
 
     @Override
     @Transactional
+    @Modifying
     public void deleteById(Long id) {
         repo.deleteById(id);
     }
@@ -72,15 +70,19 @@ public class ReceptServiceImpl implements ReceptService {
     @Transactional
     public ReceptDto save(ReceptDto receptDto) {
         if(receptDto.getId() == null) {
-            ReceptEntity receptEntity = mapper.map(receptDto, ReceptEntity.class);
+            ReceptEntity receptEntity = receptMapper.receptDtoToEntity(receptDto);
             if (receptEntity.getHozzavalok() != null) {
                 ReceptEntity finalReceptEntity = receptEntity;
                 receptEntity.getHozzavalok().forEach(hozzavalok -> {
                     hozzavalok.setRecept(finalReceptEntity);
                 });
             }
+            if (receptDto.getFelhasznaloId() != null) {
+                FelhasznaloEntity felhasznaloEntity = felhasznaloRepository.findById(receptDto.getFelhasznaloId()).orElseThrow(() -> new EntityNotFoundException("EntityNotFoundError"));
+                receptEntity.setFelhasznalo(felhasznaloEntity);
+            }
             receptEntity = repo.save(receptEntity);
-            receptDto = mapper.map(receptEntity, ReceptDto.class);
+            receptDto = receptMapper.receptEntityToDto(receptEntity);
             return receptDto;
         }else{
              ReceptEntity receptEntity = repo.findById(receptDto.getId()).orElseThrow(()-> new EntityNotFoundException("EntityNotFoundError"));

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface HozzavalokRepository extends JpaRepository<HozzavalokEntity,Long> {
-    ReceptEntity getByNev(String nev);
+    HozzavalokEntity getByNev(String nev);
     void deleteByNev(String nev);
 }
